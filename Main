@@ -1,0 +1,115 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.doublyusage;
+import java.util.Scanner;
+/**
+ *
+ * @author lenovo
+ */
+public class DoublyUsage {
+    static Scanner sc = new Scanner(System.in) ; 
+    public static void main(String[] args) {
+    
+        DLL dl = new DLL();
+
+        while(true){
+            System.out.println("|||Playlist|||");
+            System.out.println(" 1) Show playlist");
+            System.out.println(" 2) Append");
+            System.out.println(" 3) InsertPrev");
+            System.out.println(" 4) InsertAfter");
+            System.out.println(" 5) Delete Song");
+            System.out.println(" 6) Search Song");
+            System.out.println(" 0) Exit");
+            System.out.print("Select Command : ");
+            int cmd = Integer.parseInt(sc.nextLine().trim());
+            
+            switch( cmd ){
+                case 1:{
+                   dl.showAll();
+                   break ; 
+                }
+                case 2:{
+                    System.out.print("Insert Title : ");
+                    String title = sc.nextLine().trim();
+                    System.out.print("Insert Artist : ");
+                    String artist = sc.nextLine().trim();
+                    System.out.print("Insert Album : ");
+                    String album = sc.nextLine().trim();
+                    System.out.print("Insert Time : ");
+                    int time = Integer.parseInt(sc.nextLine().trim());
+                    dl.append(title, artist, album, time);
+                    System.out.println("Add Success");
+                    break ; 
+                }case 3:{
+                    System.out.print("Insert Title : ");
+                    String title = sc.nextLine().trim();
+                    System.out.print("Insert Artist : ");
+                    String artist = sc.nextLine().trim();
+                    System.out.print("Insert Album : ");
+                    String album = sc.nextLine().trim();
+                    System.out.print("Insert Time : ");
+                    int time = Integer.parseInt(sc.nextLine().trim());
+                    System.out.print("Insert Target Title : ");
+                    String target = sc.nextLine().trim();
+                    dl.addPrev(title, artist, album, time, target);
+                    System.out.println("Add Success");
+                    break ; 
+                }case 4:{
+                    System.out.print("Insert Title : ");
+                    String title = sc.nextLine().trim();
+                    System.out.print("Insert Artist : ");
+                    String artist = sc.nextLine().trim();
+                    System.out.print("Insert Album : ");
+                    String album = sc.nextLine().trim();
+                    System.out.print("Insert Time : ");
+                    int time = Integer.parseInt(sc.nextLine().trim());
+                    System.out.print("Insert Target Title : ");
+                    String target = sc.nextLine().trim();
+                    dl.addhind(title, artist, album, time, target);
+                    System.out.println("Add Success");
+                    break ; 
+                }case 5:{
+                    System.out.print("Insert Song for Delete : ");
+                    String dlsong = sc.nextLine().trim();
+                    dl.removeSong(dlsong);
+                    break;
+                }case 6:{
+                    System.out.print("Insert Song for Search : ");
+                    String sesong = sc.nextLine().trim();
+                    dl.search(sesong) ; 
+                    DNode found = dl.search(sesong) ;
+                    
+                    if(found != null){
+                        System.out.print(found + " --> Has been found!!") ; 
+                    }else{
+                         System.out.print("Not found") ; 
+                    }
+                    break ; 
+                }case 0:{
+                    System.out.println("GoodBye");
+                    return ; 
+                }default:{
+                    System.out.println("Invalid command pls try again!");
+                    break ; 
+                }
+            }
+        }
+    }
+    
+    
+    
+        static int readInt(String prompt){
+            while (true) {
+                System.out.print(prompt);
+                String s = sc.nextLine().trim();
+                try {
+                    return Integer.parseInt(s);
+                    } catch (NumberFormatException e) {
+                System.out.println("Error!!");
+                    }
+            }
+        }
+}
