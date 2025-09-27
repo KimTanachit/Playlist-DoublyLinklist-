@@ -1,0 +1,27 @@
+public class DNode {
+    DNode Rlink, Llink ; 
+        String title, artist, album ;
+        int time;
+
+   
+
+    DNode(String title, String artist, String album, int time){
+        this.title = title ; 
+        this.artist = artist;
+        this.album = album ; 
+        this.time = time ;    
+        
+        String source ;
+ }
+        public String toString(){
+            return String.format("%s -- %s [%s] %s",
+            title, artist, album, formatDurationFromMinutes(time));
+        }
+        static String formatDurationFromMinutes(int minutes){
+        if (minutes < 60){
+            return String.format("%02d:00", minutes);
+            } 
+            int h = minutes / 60, m = minutes % 60;
+            return String.format("%d:%02d:00", h, m);
+    }
+}
