@@ -1,0 +1,177 @@
+public class DLL {
+    DNode temp, head, travel, tail ;
+    int count ;
+        void addFirst(String title, String artis, String album, int time){
+            DNode newnode = new DNode(title,artis,album,time);
+            if (count == 0) {
+                append(title,artis,album,time);
+            } else {
+                newnode.Rlink = head;
+                head.Llink = newnode;
+                head = newnode;
+            }
+            count++;
+        }
+        void addPrev(String title, String artist, String album, int time, String target){
+            DNode newnode = new DNode(title,artist,album,time);
+            DNode position  ;
+            position = search(target);
+                if(position == head){
+                    addFirst(title,artist,album,time);
+                    return;
+                }
+                if(position == null){
+                    System.out.println("Error !!!") ; 
+                }
+                if(position != null){
+                    newnode.Rlink = position ; 
+                    newnode.Llink = position.Llink ;
+                    position.Llink.Rlink = newnode ; 
+                    position.Llink = newnode ; 
+                    return ; 
+                }
+                count ++ ; 
+        }
+            void addhind(String title, String artis, String album, int time, String target){
+            DNode newnode = new DNode(title,artis,album,time);
+            DNode position  ;
+            position = search(target);
+                if(position == null){
+                    System.out.println("Error!");
+                }
+                if(position == tail ){
+                    append(title,artis,album,time);
+                    return ; 
+                }
+                if(position != null){
+                    newnode.Llink = position ; 
+                    newnode.Rlink = position.Rlink ;
+                    position.Rlink.Llink = newnode ; 
+                    position.Rlink = newnode ; 
+                }
+                count ++ ; 
+        }
+        void append (String title, String artist, String album, int time){
+            DNode newnode = new DNode(title,artist,album,time);
+            if (count == 0){
+                head = newnode ; 
+                tail = newnode ;
+            } else {
+                tail.Rlink = newnode ; 
+                newnode.Llink = tail ;
+                tail = newnode ; 
+            }
+            count ++ ; 
+        }
+    DNode search(String target) {
+            travel = head;
+            String key = target.trim();
+            while (travel != null) {
+                if(travel.title != null && key.equalsIgnoreCase(travel.title)){
+                    break ;
+                }
+                travel = travel.Rlink;
+            }
+            return travel;
+        }
+        void showAll(){
+            DNode cur = head ; 
+            if(cur == null){
+                System.out.println("Nothing found Pls insert one !!!");
+                return;
+            }
+            while(cur != null){
+                System.out.println(cur);
+                cur = cur.Rlink; 
+             }
+        }
+        void removeFirst(){
+            if(count != 0 ){
+               temp = head ; 
+            if(count > 1 ){
+                head = head.Rlink ; 
+                temp.Rlink = null ;
+                head.Llink = null ;
+            }
+            else {
+                head = null;
+            }
+            count -- ; 
+            } 
+        }
+        void removeLast(){
+            if(count > 0 ){
+                if(count > 1 ){
+                    temp = tail ;
+                    tail = tail.Llink ; 
+                    tail.Rlink = null ;
+                    temp.Llink = null ; 
+                }else {
+                    temp = tail ; 
+                    head = null ;
+                    tail = null ;
+                }
+                count -- ; 
+            }
+        }
+        void removePre(String target){
+            DNode position ; 
+            position = search(target) ; 
+            if(position == head && position != null){
+                removeFirst();
+            } else if(position != null){
+                if (position.Llink != head) {
+                    temp = position.Llink;
+                    temp.Llink.Rlink = position;
+                    position.Llink = temp.Llink;
+                    temp.Llink = null;
+                    temp.Rlink = null;
+                    count--;
+                } else {
+                    removeFirst();
+                }
+            }
+        }
+        void removeNext(String target){
+            DNode position;
+            position = search(target);
+            DNode temp = position.Rlink ; 
+          if(temp == null ){
+              removeLast();
+              return ;
+          }
+           
+         position.Rlink = temp.Rlink;
+
+          if(temp.Rlink != null){ 
+                temp.Rlink.Llink = position ;    
+            }else{
+              tail = position ; 
+          }     
+                temp.Llink = null;
+                temp.Rlink = null;
+                count -- ;
+        }
+        void removeSong(String target){
+            DNode position;
+            position = search(target);
+            
+            if (position == null){
+            System.out.println("Not found !!");
+            return;
+            }
+            if(position == head){
+                removeFirst();
+                return;
+            }
+            if(position == tail){
+                removeLast();
+                return ; 
+            }
+            
+            position.Llink.Rlink = position.Rlink;
+            position.Rlink.Llink = position.Llink;
+            System.out.println(target + " has been deleted.");
+            count -- ;
+        }
+}
